@@ -1,5 +1,14 @@
 # wifi-radar-go
 
+### How to run
+
+- ```git clone https://github.com/paplauskis/wifi-radar-go.git```
+- set up ```.env``` file in ```internal/config/```
+- run postgres docker container
+- ```cd wifi-radar-go```
+- run ```go mod tidy``` in root folder to download all dependencies
+- run the app ```go run cmd/server/main.go```
+
 ### API endpoints
 
 - GET api/map/search?city={value}
