@@ -39,7 +39,20 @@ func (h *Handler) CreateReview(context *gin.Context) {
 }
 
 func (h *Handler) GetPasswords(context *gin.Context) {
-	context.JSON(http.StatusBadRequest, "not implemented")
+	id := context.Query("id")
+	parsedId, err := strconv.ParseInt(id, 10, 64)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, "Invalid ID format.")
+	}
+
+	wifiPasswords, err := QueryWifiPassword(parsedId, h.db)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	context.JSON(http.StatusOK, wifiPasswords)
 }
 
 func (h *Handler) AddPassword(context *gin.Context) {
