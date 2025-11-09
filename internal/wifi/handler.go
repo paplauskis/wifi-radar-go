@@ -35,13 +35,13 @@ func (h *Handler) GetReviews(context *gin.Context) {
 }
 
 func (h *Handler) CreateReview(context *gin.Context) {
-
+	context.JSON(http.StatusBadRequest, "not implemented")
 }
 
 func (h *Handler) GetPasswords(context *gin.Context) {
-
+	context.JSON(http.StatusBadRequest, "not implemented")
 }
 
 func (h *Handler) AddPassword(context *gin.Context) {
-
+	context.JSON(http.StatusBadRequest, "not implemented")
 }
