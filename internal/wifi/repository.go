@@ -2,7 +2,6 @@ package wifi
 
 import (
 	"database/sql"
-	"log"
 )
 
 func QueryWifiReview(wifiID int64, db *sql.DB) ([]WifiReviewDTO, error) {
@@ -22,7 +21,6 @@ func QueryWifiReview(wifiID int64, db *sql.DB) ([]WifiReviewDTO, error) {
 
 	defer rows.Close()
 
-	log.Println("rows:", rows)
 	for rows.Next() {
 		var review WifiReviewDTO
 		if err := rows.Scan(
@@ -38,6 +36,38 @@ func QueryWifiReview(wifiID int64, db *sql.DB) ([]WifiReviewDTO, error) {
 
 		wifiReviews = append(wifiReviews, review)
 	}
-	log.Printf("wifiReviews: %v", wifiReviews)
+
+	return wifiReviews, nil
+}
+
+func QueryWifiPassword(wifiID int64, db *sql.DB) ([]WifiPasswordDTO, error) {
+	var wifiReviews []WifiPasswordDTO
+
+	rows, err := db.Query(`
+        SELECT wp.id, wp.created_at, wp.wifi_id, wp.password
+        FROM wifi_password wp
+        WHERE wifi_id = $1
+    `, wifiID)
+
+	if err != nil {
+		return wifiReviews, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var review WifiPasswordDTO
+		if err := rows.Scan(
+			&review.WifiPasswordID,
+			&review.CreatedAt,
+			&review.WifiID,
+			&review.Password,
+		); err != nil {
+			return wifiReviews, err
+		}
+
+		wifiReviews = append(wifiReviews, review)
+	}
+
 	return wifiReviews, nil
 }
