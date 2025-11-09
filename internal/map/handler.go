@@ -3,12 +3,14 @@ package _map
 import (
 	"database/sql"
 	"encoding/json"
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"strconv"
 	"wifi-radar-go/internal/external/openstreetmap"
 	"wifi-radar-go/internal/external/overpass"
+	"wifi-radar-go/internal/validation"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Handler struct {
@@ -49,15 +51,10 @@ func (h *Handler) GetCoordinates(context *gin.Context) {
 	street := context.Query("street")
 	building := context.Query("buildingNumber")
 
-	if city == "" || street == "" || building == "" {
-		context.JSON(http.StatusBadRequest, "City, street or building number not specified.")
-		return
-	}
+	buildingNumber, err := validation.ValidateAddress(city, street, building)
 
-	buildingNumber, err := strconv.Atoi(building)
-	if err != nil || buildingNumber < 1 {
-		context.JSON(http.StatusBadRequest, "Invalid building number specified.")
-		return
+	if err != nil {
+		context.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	client := overpass.NewClient()
