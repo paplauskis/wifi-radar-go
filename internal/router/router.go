@@ -2,8 +2,10 @@ package router
 
 import (
 	"database/sql"
-	"github.com/gin-gonic/gin"
 	_map "wifi-radar-go/internal/map"
+	_wifi "wifi-radar-go/internal/wifi"
+
+	"github.com/gin-gonic/gin"
 )
 
 func SetupRoutes(db *sql.DB) *gin.Engine {
@@ -11,7 +13,7 @@ func SetupRoutes(db *sql.DB) *gin.Engine {
 
 	mapHandler := _map.NewHandler(db)
 	//userHandler := user.NewHandler(db)
-	//wifiHandler := wifi.NewHandler(db)
+	wifiHandler := _wifi.NewHandler(db)
 
 	api := r.Group("/api")
 	{
@@ -31,13 +33,13 @@ func SetupRoutes(db *sql.DB) *gin.Engine {
 		//	userRoutes.DELETE("/:userId/favorites/:wifiId", userHandler.DeleteFavorite)
 		//}
 
-		//wifiRoutes := api.Group("/wifi")
-		//{
-		//	wifiRoutes.POST("/reviews", wifiHandler.CreateReview)
-		//	wifiRoutes.GET("/reviews", wifiHandler.GetReviews)
-		//	wifiRoutes.POST("/passwords", wifiHandler.AddPassword)
-		//	wifiRoutes.GET("/passwords", wifiHandler.GetPasswords)
-		//}
+		wifiRoutes := api.Group("/wifi")
+		{
+			wifiRoutes.GET("/reviews", wifiHandler.GetReviews)
+			wifiRoutes.POST("/reviews", wifiHandler.CreateReview)
+			wifiRoutes.GET("/passwords", wifiHandler.GetPasswords)
+			wifiRoutes.POST("/passwords", wifiHandler.AddPassword)
+		}
 	}
 
 	return r
