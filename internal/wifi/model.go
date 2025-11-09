@@ -10,3 +10,10 @@ type WifiReviewDTO struct {
 	Rating       int8      `json:"rating"`
 	Username     string    `json:"username"`
 }
+
+type WifiPasswordDTO struct {
+	WifiPasswordID int32     `json:"id"`
+	CreatedAt      time.Time `json:"created_at"`
+	WifiID         int64     `json:"wifi_id"`
+	Password       string    `json:"password"`
+}
