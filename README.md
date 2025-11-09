@@ -20,6 +20,6 @@
 - POST api/wifi/reviews (per body perduot WifiReviewDto)
 - GET api/wifi/reviews?id={value}
 - POST /api/wifi/passwords (body - PasswordDto)
-- GET api/wifi/passwords?city={value}&street={value}&buildingNumber={value}
+- GET api/wifi/passwords?id={value}
 - POST api/user/auth/login (body - username, email)
 - POST api/user/auth/register (body - username, email)
