@@ -17,7 +17,6 @@ func SetupRoutes(db *sql.DB) *gin.Engine {
 
 	api := r.Group("/api")
 	{
-		// Map routes
 		mapRoutes := api.Group("/map")
 		{
 			mapRoutes.GET("/search", mapHandler.Search)
