@@ -18,8 +18,8 @@
 - GET api/user/{userId}/favorites
 - DELETE api/user/{userId}/favorites/{wifiId}
 - POST api/wifi/reviews (per body perduot WifiReviewDto)
-- GET api/wifi/reviews?id={value}
+- GET api/wifi/reviews?wifiId={value}
 - POST /api/wifi/passwords (body - PasswordDto)
-- GET api/wifi/passwords?id={value}
-- POST api/user/auth/login (body - username, email)
-- POST api/user/auth/register (body - username, email)
+- GET api/wifi/passwords?wifiId={value}
+- POST api/user/auth/login (body - username, password)
+- POST api/user/auth/register (body - username, password)
