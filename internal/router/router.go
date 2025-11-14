@@ -14,7 +14,7 @@ func SetupRoutes(db *sql.DB) *gin.Engine {
 
 	mapHandler := _map.NewHandler(db)
 	userHandler := user.NewUserHandler(db)
-	//wifiHandler := wifi.NewHandler(db)
+	wifiHandler := wifi.NewHandler(db)
 
 	api := r.Group("/api")
 	{
