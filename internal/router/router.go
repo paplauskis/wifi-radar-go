@@ -5,6 +5,7 @@ import (
 	_map "wifi-radar-go/internal/map"
 	"wifi-radar-go/internal/middleware"
 	"wifi-radar-go/internal/user"
+	"wifi-radar-go/internal/wifi"
 
 	"github.com/gin-gonic/gin"
 )
