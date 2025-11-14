@@ -14,12 +14,12 @@
 - GET api/map/search?city={value}
 - GET api/map/search?city={value}&radius={value}
 - GET api/map/coordinates?city={value}&street={value}&buildingNumber={value}
-- POST api/user/{userId}/favorites (wifi object)
-- GET api/user/{userId}/favorites
-- DELETE api/user/{userId}/favorites/{wifiId}
+- POST api/User/{userId}/favorites (wifi object)
+- GET api/User/{userId}/favorites
+- DELETE api/User/{userId}/favorites/{wifiId}
 - POST api/wifi/reviews (per body perduot WifiReviewDto)
 - GET api/wifi/reviews?wifiId={value}
 - POST /api/wifi/passwords (body - PasswordDto)
 - GET api/wifi/passwords?wifiId={value}
-- POST api/user/auth/login (body - username, password)
-- POST api/user/auth/register (body - username, password)
+- POST api/User/auth/login (body - username, password)
+- POST api/User/auth/register (body - username, password)
