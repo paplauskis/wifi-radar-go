@@ -41,13 +41,13 @@ func SetupRoutes(db *sql.DB) *gin.Engine {
 			}
 		}
 
-		//wifiRoutes := api.Group("/wifi")
-		//{
-		//	wifiRoutes.POST("/reviews", wifiHandler.CreateReview)
-		//	wifiRoutes.GET("/reviews", wifiHandler.GetReviews)
-		//	wifiRoutes.POST("/passwords", wifiHandler.AddPassword)
-		//	wifiRoutes.GET("/passwords", wifiHandler.GetPasswords)
-		//}
+		wifiRoutes := api.Group("/wifi")
+		{
+			wifiRoutes.POST("/reviews", wifiHandler.CreateReview)
+			wifiRoutes.GET("/reviews", wifiHandler.GetReviews)
+			wifiRoutes.POST("/passwords", wifiHandler.AddPassword)
+			wifiRoutes.GET("/passwords", wifiHandler.GetPasswords)
+		}
 	}
 
 	return r
