@@ -19,14 +19,12 @@ func SetupRoutes(db *sql.DB) *gin.Engine {
 
 	api := r.Group("/api")
 	{
-		// Map routes
 		mapRoutes := api.Group("/map")
 		{
 			mapRoutes.GET("/search", mapHandler.Search)
 			mapRoutes.GET("/coordinates", mapHandler.GetCoordinates)
 		}
 
-		// User routes
 		userRoutes := api.Group("/user")
 		{
 			userRoutes.POST("/auth/login", userHandler.Login)
