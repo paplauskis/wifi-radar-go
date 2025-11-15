@@ -36,7 +36,7 @@ func (uh *UserHandler) Register(c *gin.Context) {
 	//password hash
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error1": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -47,7 +47,7 @@ func (uh *UserHandler) Register(c *gin.Context) {
 	).Scan(&id)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error2": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -71,12 +71,12 @@ func (uh *UserHandler) Login(c *gin.Context) {
 		input.Username,
 	).Scan(&user.ID, &user.Username, &user.Password)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error1": "Invalid credentials"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password)); err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error2": "Invalid credentials"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return
 	}
 
@@ -88,7 +88,7 @@ func (uh *UserHandler) Login(c *gin.Context) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(jwtKey)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error3": "failed to create token"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to create token"})
 		return
 	}
 
@@ -101,12 +101,12 @@ func (uh *UserHandler) AddFavorite(c *gin.Context) {
 		WifiID int `json:"wifi_id"`
 	}
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error1": "invalid input"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid input"})
 		return
 	}
 	_, err := uh.db.Exec("INSERT INTO user_favorite_wifi (user_id, wifi_id) VALUES ($1, $2)", ID, input.WifiID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error2": "failed to favorite"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to favorite"})
 		return
 	}
 	c.JSON(http.StatusCreated, gin.H{"message": "favorite added"})
@@ -118,7 +118,7 @@ func (uh *UserHandler) GetFavorite(c *gin.Context) {
 	rows, err := uh.db.Query(
 		"SELECT wifi_id FROM user_favorite_wifi WHERE user_id = $1", ID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error1": "failed to get favorite"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to get favorite"})
 		return
 	}
 	defer rows.Close()
@@ -146,13 +146,13 @@ func (uh *UserHandler) DeleteFavorite(c *gin.Context) {
 		"DELETE FROM user_favorite_wifi WHERE user_id=$1 AND wifi_id=$2",
 		ID, WifiID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error1": "failed to delete favorite"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to delete favorite"})
 		return
 	}
 
 	rowsAffected, _ := result.RowsAffected()
 	if rowsAffected == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error2": "favorite not found"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "favorite not found"})
 		return
 	}
 
